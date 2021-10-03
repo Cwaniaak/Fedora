@@ -6,6 +6,7 @@ namespace Sapiox.Events.Handlers
     {
         public static event EventHandler.OnSapioxEvent<PlayerJoinEventArgs> Join;
         public static event EventHandler.OnSapioxEvent<PlayerLeaveEventArgs> Leave;
+        public static event EventHandler.OnSapioxEvent<PlayerBanEventArgs> Ban; 
 
         public static void OnJoin(API.Player ply, ref string Nickname)
         {
@@ -17,6 +18,12 @@ namespace Sapiox.Events.Handlers
         {
             var ev = new PlayerLeaveEventArgs {Player = ply};
             Leave?.Invoke(ev);
+        }
+
+        public static void OnBan(API.Player target, ref long duration, ref bool globalban, ref string reason)
+        {
+            var ev = new PlayerBanEventArgs {Target = target, IsGlobalBan = globalban, Duration = duration, Reason = reason};
+            Ban?.Invoke(ev);
         }
     }
 }

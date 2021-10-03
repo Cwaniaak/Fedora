@@ -75,6 +75,8 @@
         <Compile Include="Events\EventArgs\Player.cs" />
         <Compile Include="Events\Handlers\EventHandler.cs" />
         <Compile Include="Events\Handlers\Player.cs" />
+        <Compile Include="Events\Patches\PlayerBan.cs" />
+        <Compile Include="Events\Patches\PlayerComponent.cs" />
         <Compile Include="Events\Patches\PlayerJoin.cs" />
         <Compile Include="Events\Patches\PlayerLeave.cs" />
         <Compile Include="SapioxManager.cs" />

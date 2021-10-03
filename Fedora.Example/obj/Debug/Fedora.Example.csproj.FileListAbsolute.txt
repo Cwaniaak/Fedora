@@ -21,3 +21,6 @@
 /home/jakub/RiderProjects/Sapiox/Fedora.Example/obj/Debug/Fedora.Example.csproj.CopyComplete
 /home/jakub/RiderProjects/Sapiox/Fedora.Example/obj/Debug/Sapiox.Example.dll
 /home/jakub/RiderProjects/Sapiox/Fedora.Example/obj/Debug/Sapiox.Example.pdb
+/home/jakub/RiderProjects/Sapiox/Fedora.Example/bin/Debug/Sapiox.dll
+/home/jakub/RiderProjects/Sapiox/Fedora.Example/bin/Debug/Newtonsoft.Json.dll
+/home/jakub/RiderProjects/Sapiox/Fedora.Example/bin/Debug/Newtonsoft.Json.xml

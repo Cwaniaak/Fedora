@@ -11,10 +11,7 @@ namespace Sapiox.API
         public static string Name
         {
             get => ServerConsole._serverName;
-            set
-            {
-                ServerConsole._serverName = value;
-            }
+            set => ServerConsole._serverName = value;
         }
         public static Player GetPlayer(NetworkConnection connection)
         {
@@ -64,8 +61,32 @@ namespace Sapiox.API
         {
             return Players.Where(x => fractions.Any(y => x.Faction == y)).ToList();
         }
+        public static Player GetPlayer(int playerid) => Players.FirstOrDefault(x => x.Id == playerid);
+        public static Player GetPlayer(string argument)
+        {
+            var players = Players;
 
-        public static List<Player> Players =>
-            PlayerManager.players.Select(x => x.GetComponent<Player>()).ToList();
+            if (int.TryParse(argument, out var playerid))
+            {
+                var player = GetPlayer(playerid);
+                if (player == null)
+                    goto AA_001;
+
+                return player;
+            }
+
+            else if (argument.Contains("@"))
+            {
+                var player = players.FirstOrDefault(x => x.UserId.ToLower() == argument);
+                if (player == null)
+                    goto AA_001;
+
+                return player;
+            }
+
+            AA_001:
+            return players.FirstOrDefault(x => x.NickName.ToLower() == argument.ToLower());
+        }
+        public static List<Player> Players => PlayerManager.players.Select(x => x.gameObject.GetComponent<Player>()).ToList();
     }
 }

@@ -10,7 +10,7 @@ namespace Sapiox.Events.Patches
     internal static class PlayerLeavePatch
     {
         [HarmonyPrefix]
-        private static void Prefix(NetworkConnection conn)
+        private static void OnServerDisconnect(NetworkConnection conn)
         {
             try
             {
@@ -19,7 +19,7 @@ namespace Sapiox.Events.Patches
             }
             catch (Exception e)
             {
-                Log.Error($"{typeof(PlayerLeavePatch).FullName}.{nameof(Prefix)}:\n{e}");
+                Log.Error($"{typeof(PlayerLeavePatch).FullName}.{nameof(OnServerDisconnect)}:\n{e}");
             }
         }
     }

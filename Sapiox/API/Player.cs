@@ -7,9 +7,9 @@ namespace Sapiox.API
     {
         internal Player()
         {
-            ReferenceHub Hub = GetComponent<ReferenceHub>();
+            Hub = GetComponent<ReferenceHub>();
         }
-
+        
         public void RemoveDisplayInfo(PlayerInfoArea playerInfo) => Hub.nicknameSync.Network_playerInfoToShow &= ~playerInfo;
 
         public void AddDisplayInfo(PlayerInfoArea playerInfo) => Hub.nicknameSync.Network_playerInfoToShow |= playerInfo;
@@ -20,6 +20,7 @@ namespace Sapiox.API
         
         public Team Team => Hub.characterClassManager.CurRole.team;
         public Faction Faction => Hub.characterClassManager.Faction;
+        public int Id => Hub.playerId;
         public RoleType Role
         {
             get => Hub.characterClassManager.CurClass;
