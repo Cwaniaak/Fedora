@@ -1,6 +1,6 @@
-using Fedora.API;
+using Sapiox.API;
 
-namespace Fedora.Example
+namespace Sapiox.Example
 {
     public class Config : IConfig
     {
