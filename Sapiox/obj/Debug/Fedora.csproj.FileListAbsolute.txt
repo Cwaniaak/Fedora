@@ -1,0 +1,17 @@
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/0Harmony.dll
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/Assembly-CSharp-firstpass.dll
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/Assembly-CSharp-Publicized.dll
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/Mirror_publicized.dll
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/NorthwoodLib.dll
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/UnityEngine.AnimationModule.dll
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/UnityEngine.CoreModule.dll
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/UnityEngine.dll
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/UnityEngine.PhysicsModule.dll
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/0Harmony.xml
+/home/jakub/RiderProjects/Fedora/Fedora/obj/Debug/Fedora.csproj.AssemblyReference.cache
+/home/jakub/RiderProjects/Fedora/Fedora/obj/Debug/Fedora.csproj.CoreCompileInputs.cache
+/home/jakub/RiderProjects/Fedora/Fedora/obj/Debug/Fedora.csproj.CopyComplete
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/Sapiox.dll
+/home/jakub/RiderProjects/Fedora/Fedora/bin/Debug/Sapiox.pdb
+/home/jakub/RiderProjects/Fedora/Fedora/obj/Debug/Sapiox.dll
+/home/jakub/RiderProjects/Fedora/Fedora/obj/Debug/Sapiox.pdb

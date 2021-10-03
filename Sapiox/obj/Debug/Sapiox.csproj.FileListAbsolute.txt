@@ -1,0 +1,17 @@
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/Sapiox.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/Sapiox.pdb
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/0Harmony.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/Assembly-CSharp-firstpass.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/Assembly-CSharp-Publicized.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/Mirror_publicized.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/NorthwoodLib.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/UnityEngine.AnimationModule.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/UnityEngine.CoreModule.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/UnityEngine.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/UnityEngine.PhysicsModule.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/0Harmony.xml
+/home/jakub/RiderProjects/Sapiox/Sapiox/obj/Debug/Sapiox.csproj.AssemblyReference.cache
+/home/jakub/RiderProjects/Sapiox/Sapiox/obj/Debug/Sapiox.csproj.CoreCompileInputs.cache
+/home/jakub/RiderProjects/Sapiox/Sapiox/obj/Debug/Sapiox.csproj.CopyComplete
+/home/jakub/RiderProjects/Sapiox/Sapiox/obj/Debug/Sapiox.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/obj/Debug/Sapiox.pdb

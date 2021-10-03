@@ -1,0 +1,12 @@
+/home/jakub/RiderProjects/Fedora/Fedora.Example/bin/Release/Fedora.Example.dll
+/home/jakub/RiderProjects/Fedora/Fedora.Example/bin/Release/Fedora.Example.pdb
+/home/jakub/RiderProjects/Fedora/Fedora.Example/bin/Release/Fedora.dll
+/home/jakub/RiderProjects/Fedora/Fedora.Example/bin/Release/0Harmony.dll
+/home/jakub/RiderProjects/Fedora/Fedora.Example/bin/Release/UnityEngine.CoreModule.dll
+/home/jakub/RiderProjects/Fedora/Fedora.Example/bin/Release/Fedora.pdb
+/home/jakub/RiderProjects/Fedora/Fedora.Example/bin/Release/0Harmony.xml
+/home/jakub/RiderProjects/Fedora/Fedora.Example/obj/Release/Fedora.Example.csproj.AssemblyReference.cache
+/home/jakub/RiderProjects/Fedora/Fedora.Example/obj/Release/Fedora.Example.csproj.CoreCompileInputs.cache
+/home/jakub/RiderProjects/Fedora/Fedora.Example/obj/Release/Fedora.Example.csproj.CopyComplete
+/home/jakub/RiderProjects/Fedora/Fedora.Example/obj/Release/Fedora.Example.dll
+/home/jakub/RiderProjects/Fedora/Fedora.Example/obj/Release/Fedora.Example.pdb

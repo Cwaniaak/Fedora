@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sapiox", "Sapiox\Sapiox.csproj", "{BED086F1-DAE2-46D2-A7D1-B1E79505B80C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fedora.Example", "Fedora.Example\Fedora.Example.csproj", "{75224B3D-4CE1-401A-8236-52D6BE4A9589}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BED086F1-DAE2-46D2-A7D1-B1E79505B80C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BED086F1-DAE2-46D2-A7D1-B1E79505B80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BED086F1-DAE2-46D2-A7D1-B1E79505B80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BED086F1-DAE2-46D2-A7D1-B1E79505B80C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75224B3D-4CE1-401A-8236-52D6BE4A9589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75224B3D-4CE1-401A-8236-52D6BE4A9589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75224B3D-4CE1-401A-8236-52D6BE4A9589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75224B3D-4CE1-401A-8236-52D6BE4A9589}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
