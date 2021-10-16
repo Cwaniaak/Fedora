@@ -1,7 +1,6 @@
-﻿using System.IO;
-using System.Net;
-using Newtonsoft.Json;
-using Sapiox.API;
+﻿using Sapiox.API;
+using Sapiox.Events.EventArgs;
+using PlayerEvent = Sapiox.Events.Handlers.Player;
 
 namespace Sapiox.Example
 {
@@ -11,53 +10,33 @@ namespace Sapiox.Example
         Description = "Example plugin",
         Version = "1.0.0"
         )]
-    public class Plugin : API.Plugin
+    public class Plugin : Sapiox.API.Plugin
     {
-        public override IConfig config { get; } = new Config();
+        public override IConfig config { get; set; } = new Config();
 
         public override void Load()
         {
             base.Load();
-            Events.Handlers.Player.Join += OnPlayerJoin;
-            Events.Handlers.Player.Leave += OnPlayerLeave;
-            Events.Handlers.Player.Ban += OnPlayerBan;
+            PlayerEvent.Join += OnPlayerJoin;
+            PlayerEvent.Leave += OnPlayerLeave;
+            PlayerEvent.Ban += OnPlayerBan;
+            PlayerEvent.Kick += OnPlayerKick;
         }
 
-        public void OnPlayerBan(Events.EventArgs.PlayerBanEventArgs ev)
+        public void OnPlayerBan(PlayerBanEventArgs ev)
         {
-            //webhook
-            string token =
-                "https://canary.discord.com/api/webhooks/894256450384322561/b-Gi2cLMxUwpOWeMVFf_926Pr6xlm7eKSd-a-ryo8vfQ3m-2SjzGGledBhuI32gx5OdR";
-            WebRequest wr = (HttpWebRequest) WebRequest.Create(token);
-            wr.ContentType = "application/json";
-            wr.Method = "POST";
-            using (var sw = new StreamWriter(wr.GetRequestStream()))
-            {
-                string json = JsonConvert.SerializeObject(new
-                {
-                    username = "CwanStars Ban",
-                    embeds = new[]
-                    {
-                        new
-                        {
-                            description =
-                                $"Gracz {ev.Target.NickName} ({ev.Target.UserId}) dostał bana\nPowód: {ev.Reason}\nCzas: {ev.Duration}",
-                            title = "Testing Stuff",
-                            color = 65417
-                        }
-                    }
-                });
-
-                sw.Write(json);
-            }
-
-            var responsee = (HttpWebResponse) wr.GetResponse();
+            Log.Info($"Player {ev.Target.NickName} gets banned for {ev.Reason} {ev.Duration}");
         }
-        public void OnPlayerLeave(Events.EventArgs.PlayerLeaveEventArgs ev)
+
+        public void OnPlayerKick(PlayerKickEventArgs ev)
+        {
+            Log.Info($"Player {ev.Target.NickName} gets kicked for {ev.Reason}");
+        }
+        public void OnPlayerLeave(PlayerLeaveEventArgs ev)
         {
             Log.Info($"Player {ev.Player.NickName} has left the server!");
         }
-        public void OnPlayerJoin(Events.EventArgs.PlayerJoinEventArgs ev)
+        public void OnPlayerJoin(PlayerJoinEventArgs ev)
         {
             Log.Info($"Player {ev.NickName} has joined the server!");
         }

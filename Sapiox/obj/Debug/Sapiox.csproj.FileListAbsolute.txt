@@ -15,3 +15,7 @@
 /home/jakub/RiderProjects/Sapiox/Sapiox/obj/Debug/Sapiox.csproj.CopyComplete
 /home/jakub/RiderProjects/Sapiox/Sapiox/obj/Debug/Sapiox.dll
 /home/jakub/RiderProjects/Sapiox/Sapiox/obj/Debug/Sapiox.pdb
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/Newtonsoft.Json.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/Newtonsoft.Json.xml
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/YamlDotNet.dll
+/home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/YamlDotNet.xml

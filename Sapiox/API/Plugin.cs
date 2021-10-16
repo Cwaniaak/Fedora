@@ -9,27 +9,26 @@ namespace Sapiox.API
     public interface IPlugin
     {
         PluginInfo Info { get; set; }
-        IConfig config { get; }
+        IConfig config { get; set; }
         
         string PluginDirectory { get; set; }
 
         void Load();
-
-        void ReloadConfigs();
     }
 
     public abstract class Plugin : IPlugin
     {
         public PluginInfo Info { get; set; }
 
-        public virtual IConfig config { get; }
+        public virtual IConfig config { get; set; }
 
         private string _pluginDirectory;
 
-        public virtual void Load() => Log.Info($"{Info.Name} by {Info.Author} has been enabled!");
-
-        public virtual void ReloadConfigs()
+        public virtual void Load()
         {
+            if(!config.Load) return;
+            Config.Load();
+            Log.Info($"{Info.Name} by {Info.Author} has been enabled!");
         }
 
         public string PluginDirectory

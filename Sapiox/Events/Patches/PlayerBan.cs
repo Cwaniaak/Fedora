@@ -18,7 +18,10 @@ namespace Sapiox.Events.Patches
                 try
                 {
                     var Target = Server.GetPlayer(user);
-                    Handlers.Player.OnBan(Target, ref duration, ref isGlobalBan, ref reason);
+                    
+                    if (duration == 0) Handlers.Player.OnKick(Target, ref reason);
+                    else Handlers.Player.OnBan(Target, ref duration, ref isGlobalBan, ref reason);
+
                     return true;
                 }
                 catch (Exception e)

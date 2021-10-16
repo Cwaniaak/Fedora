@@ -10,45 +10,51 @@ using HarmonyLib;
 
 namespace Sapiox
 {
-    public class SapioxManager
+    public static class SapioxManager
     {
-        private static bool IsLoaded = false;
-        private string _SapioxDirectory;
-        private string _PluginDirectory;
-        private readonly List<IPlugin> _plugins = new List<IPlugin>();
+        public static bool IsLoaded = false;
+        private static string _sapioxDirectory;
+        private static string _pluginDirectory;
+        private static string _configDirectory;
+        public static List<IPlugin> Plugins = new List<IPlugin>();
 
-        public string SapioxDirectory
+        public static string SapioxDirectory
         {
             get
             {
-                if (!Directory.Exists(_SapioxDirectory))
-                    Directory.CreateDirectory(_SapioxDirectory);
+                if (!Directory.Exists(_sapioxDirectory))
+                    Directory.CreateDirectory(_sapioxDirectory);
 
-                return _SapioxDirectory;
+                return _sapioxDirectory;
             }
-            private set => _SapioxDirectory = value;
+            private set => _sapioxDirectory = value;
         }
 
-        public string PluginDirectory
+        public static string PluginDirectory
         {
             get
             {
-                if (!Directory.Exists(_PluginDirectory))
-                    Directory.CreateDirectory(_PluginDirectory);
+                if (!Directory.Exists(_pluginDirectory))
+                    Directory.CreateDirectory(_pluginDirectory);
 
-                return _PluginDirectory;
+                return _pluginDirectory;
             }
-            private set => _PluginDirectory = value;
+            private set => _pluginDirectory = value;
         }
 
-        public static void Init()
+        public static string ConfigDirectory
         {
-            if (IsLoaded) return;
-            IsLoaded = true;
-            new SapioxManager();
+            get
+            {
+                if (!Directory.Exists(_configDirectory))
+                    Directory.CreateDirectory(_configDirectory);
+                
+                return _configDirectory;
+            }
+            private set => _configDirectory = value;
         }
 
-        private void PatchMethods()
+        static void PatchMethods()
         {
             try
             {
@@ -62,26 +68,34 @@ namespace Sapiox
             }
         }
 
-        internal SapioxManager()
+        public static void LoadSapiox()
         {
-            var localpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sapiox");
-            SapioxDirectory = Directory.Exists(localpath)
-                ? localpath
-                : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Sapiox");
-            PluginDirectory = Path.Combine(SapioxDirectory, "plugins");
+            if (IsLoaded) return;
 
+            var localpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sapiox");
+            SapioxDirectory = Directory.Exists(localpath) ? localpath : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Sapiox");
+            ConfigDirectory = Path.Combine(SapioxDirectory, "configs");
+            PluginDirectory = Path.Combine(SapioxDirectory, "plugins");
             CustomNetworkManager.Modded = true;
             BuildInfoCommand.ModDescription = string.Join(
                 "\n",
-                AppDomain.CurrentDomain.GetAssemblies()
-                    .Where(a => a.FullName.StartsWith("Sapiox.", StringComparison.OrdinalIgnoreCase))
-                    .Select(a => $"{a.GetName().Name} - Version {a.GetName().Version.ToString(3)}"));
-            PatchMethods();
-            ActivatePlugins();
+                AppDomain.CurrentDomain.GetAssemblies().Select(a => $"{a.GetName().Name} - Version {a.GetName().Version.ToString(3)}"));
+            try
+            {
+                PatchMethods();
+                ActivatePlugins();
+                IsLoaded = true;
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Sapiox.Loader: Error:\n{e}");
+                return;
+            }
+
             Log.Info("Sapiox.Loader: Sapiox is now Loaded!");
         }
         
-        internal void ActivatePlugins()
+        static void ActivatePlugins()
         {
             var paths = Directory.GetFiles(PluginDirectory, "*.dll").ToList();
 
@@ -123,30 +137,28 @@ namespace Sapiox
                     IPlugin plugin = (IPlugin) Activator.CreateInstance(infoTypePair.Value.Key);
                     plugin.Info = infoTypePair.Key;
                     plugin.PluginDirectory = GetPluginDirectory(plugin.Info);
-                    _plugins.Add(plugin);
+                    Plugins.Add(plugin);
                 }
                 catch (Exception e)
                 {
                     Log.Error($"Sapiox.Loader: {infoTypePair.Value.Key.Assembly.GetName().Name} could not be activated!\n{e}");
                 }
             }
-
             LoadPlugins();
         }
 
-        public string GetPluginDirectory(PluginInfo infos)
+        public static string GetPluginDirectory(PluginInfo infos)
         {
             return Path.Combine(PluginDirectory, infos.Name);
         }
 
-        private void LoadPlugins()
+        public static void LoadPlugins()
         {
-            foreach (var plugin in _plugins)
+            foreach (var plugin in Plugins)
             {
                 try
                 {
                     plugin.Load();
-                    Log.Info($"Sapiox.Loader: Loaded plugin {plugin.Info.Name}@{plugin.Info.Version}!");
                 }
                 catch (Exception e)
                 {

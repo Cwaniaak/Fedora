@@ -21,6 +21,7 @@
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,10 +46,16 @@
         <Reference Include="Mirror, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\..\..\Dokumenty\Fedora dependencies\Mirror_publicized.dll</HintPath>
         </Reference>
+        <Reference Include="mscorlib" />
+        <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+          <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
         <Reference Include="NorthwoodLib, Version=1.2.1.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\..\..\Dokumenty\Fedora dependencies\NorthwoodLib.dll</HintPath>
         </Reference>
         <Reference Include="System" />
+        <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
@@ -64,8 +71,13 @@
         <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\..\..\Dokumenty\Fedora dependencies\UnityEngine.PhysicsModule.dll</HintPath>
         </Reference>
+        <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e">
+          <HintPath>..\packages\YamlDotNet.11.2.1\lib\net45\YamlDotNet.dll</HintPath>
+          <Private>True</Private>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="API\Configs.cs" />
         <Compile Include="API\IConfig.cs" />
         <Compile Include="API\Log.cs" />
         <Compile Include="API\Player.cs" />
@@ -75,10 +87,13 @@
         <Compile Include="Events\EventArgs\Player.cs" />
         <Compile Include="Events\Handlers\EventHandler.cs" />
         <Compile Include="Events\Handlers\Player.cs" />
+        <Compile Include="Events\Handlers\Server.cs" />
         <Compile Include="Events\Patches\PlayerBan.cs" />
         <Compile Include="Events\Patches\PlayerComponent.cs" />
         <Compile Include="Events\Patches\PlayerJoin.cs" />
         <Compile Include="Events\Patches\PlayerLeave.cs" />
+        <Compile Include="Events\Patches\ServerName.cs" />
+        <Compile Include="Events\Patches\WaitingForPlayers.cs" />
         <Compile Include="SapioxManager.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
