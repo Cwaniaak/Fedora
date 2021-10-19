@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "75224b3d-4ce1-401a-8236-52d6be4a9589": {
+      "ProjectGuid": "75224b3d-4ce1-401a-8236-52d6be4a9589",
+      "DisplayName": "Fedora.Example",
+      "ColorIndex": 0
+    },
+    "bed086f1-dae2-46d2-a7d1-b1e79505b80c": {
+      "ProjectGuid": "bed086f1-dae2-46d2-a7d1-b1e79505b80c",
+      "DisplayName": "Sapiox",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Różne pliki",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 2
+}

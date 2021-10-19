@@ -7,6 +7,8 @@ using CommandSystem.Commands;
 using CommandSystem.Commands.Shared;
 using Sapiox.API;
 using HarmonyLib;
+using CommandSystem;
+using RemoteAdmin;
 
 namespace Sapiox
 {
@@ -52,6 +54,23 @@ namespace Sapiox
                 return _configDirectory;
             }
             private set => _configDirectory = value;
+        }
+
+        public static void RegisterCommands(ICommand command)
+        {
+            foreach (Type type in Assembly.GetCallingAssembly().GetTypes())
+            {
+                foreach (CustomAttributeData customAttributeData in type.CustomAttributes)
+                {
+                    Type commandType = (Type)customAttributeData.ConstructorArguments?[0].Value;
+                    if (commandType == typeof(RemoteAdminCommandHandler))
+                        CommandProcessor.RemoteAdminCommandHandler.RegisterCommand(command);
+                    else if (commandType == typeof(GameConsoleCommandHandler))
+                        GameCore.Console.singleton.ConsoleCommandHandler.RegisterCommand(command);
+                    else if (commandType == typeof(ClientCommandHandler))
+                        QueryProcessor.DotCommandHandler.RegisterCommand(command);
+                }
+            }
         }
 
         static void PatchMethods()
