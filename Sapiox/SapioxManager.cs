@@ -56,23 +56,6 @@ namespace Sapiox
             private set => _configDirectory = value;
         }
 
-        public static void RegisterCommands(ICommand command)
-        {
-            foreach (Type type in Assembly.GetCallingAssembly().GetTypes())
-            {
-                foreach (CustomAttributeData customAttributeData in type.CustomAttributes)
-                {
-                    Type commandType = (Type)customAttributeData.ConstructorArguments?[0].Value;
-                    if (commandType == typeof(RemoteAdminCommandHandler))
-                        CommandProcessor.RemoteAdminCommandHandler.RegisterCommand(command);
-                    else if (commandType == typeof(GameConsoleCommandHandler))
-                        GameCore.Console.singleton.ConsoleCommandHandler.RegisterCommand(command);
-                    else if (commandType == typeof(ClientCommandHandler))
-                        QueryProcessor.DotCommandHandler.RegisterCommand(command);
-                }
-            }
-        }
-
         static void PatchMethods()
         {
             try
@@ -103,6 +86,7 @@ namespace Sapiox
             {
                 PatchMethods();
                 ActivatePlugins();
+                Server.RegisterRemoteAdminCommand(new Commands.Plugins());
                 IsLoaded = true;
             }
             catch (Exception e)

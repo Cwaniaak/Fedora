@@ -4,9 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using Assets._Scripts.Dissonance;
+using CommandSystem;
 using HarmonyLib;
 using Mirror;
 using Newtonsoft.Json;
+using RemoteAdmin;
 using UnityEngine;
 
 namespace Sapiox.API
@@ -164,5 +166,20 @@ namespace Sapiox.API
 
         public static List<Player> Players =>
             PlayerManager.players.Select(x => x.gameObject.GetComponent<Player>()).ToList();
+
+        public static void RegisterRemoteAdminCommand(ICommand command)
+        {
+            CommandProcessor.RemoteAdminCommandHandler.RegisterCommand(command);
+        }
+
+        public static void RegisterServerConsoleCommand(ICommand command)
+        {
+            GameCore.Console.singleton.ConsoleCommandHandler.RegisterCommand(command);
+        }
+
+        public static void RegisterClientConsoleCommand(ICommand command)
+        {
+            QueryProcessor.DotCommandHandler.RegisterCommand(command);
+        }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using CommandSystem;
+using Sapiox.API;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sapiox.Commands
 {
@@ -13,12 +16,21 @@ namespace Sapiox.Commands
 
         public string pluginlist()
         {
-            return string.Join("\n- ", SapioxManager.Plugins);
+            if (SapioxManager.Plugins.Count == 0)
+                return string.Join("\n- ", SapioxManager.Plugins);
+            else
+                return "No plugins loaded.";
         }
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            response = $"Active Plugins:\n{pluginlist()}";
+            List<String> activeplugins = new List<string>();
+            foreach(IPlugin plugins in SapioxManager.Plugins)
+            {
+                activeplugins.Add(plugins.Info.Name);
+            }
+
+                response = $"Active Plugins:\n- " + string.Join("\n- ", activeplugins);
             return true;
         }
     }
