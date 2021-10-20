@@ -20,7 +20,7 @@ namespace Sapiox.API
             .Build();
         
         public static Dictionary<string, IConfig> ConfigList = new Dictionary<string, IConfig>();
-        public static string path { get; set; } = Path.Combine(SapioxManager.ConfigDirectory, $"Config-{ServerStatic.ServerPort}.yml");
+        public static string path { get; set; } = Path.Combine(SapioxManager.ConfigDirectory, $"Config-{Server.Port}.yml");
 
         public static void Load()
         {

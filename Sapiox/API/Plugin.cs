@@ -16,7 +16,7 @@ namespace Sapiox.API
         void Load();
     }
 
-    public abstract class Plugin : IPlugin
+    public abstract class Plugin
     {
         public PluginInfo Info { get; set; }
 

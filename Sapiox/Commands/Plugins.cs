@@ -25,9 +25,9 @@ namespace Sapiox.Commands
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             List<String> activeplugins = new List<string>();
-            foreach(IPlugin plugins in SapioxManager.Plugins)
+            foreach(IPlugin plugin in SapioxManager.Plugins)
             {
-                activeplugins.Add(plugins.Info.Name);
+                activeplugins.Add($"{plugin.Info.Name} (Version: {plugin.Info.Version})");
             }
 
                 response = $"Active Plugins:\n- " + string.Join("\n- ", activeplugins);

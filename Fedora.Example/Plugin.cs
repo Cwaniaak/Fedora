@@ -12,25 +12,11 @@ namespace Sapiox.Example
         )]
     public class Plugin : Sapiox.API.Plugin
     {
-        public override IConfig config { get; set; } = new Config();
-
         public override void Load()
         {
             base.Load();
             PlayerEvent.Join += OnPlayerJoin;
             PlayerEvent.Leave += OnPlayerLeave;
-            PlayerEvent.Ban += OnPlayerBan;
-            PlayerEvent.Kick += OnPlayerKick;
-        }
-
-        public void OnPlayerBan(PlayerBanEventArgs ev)
-        {
-            Log.Info($"Player {ev.Target.NickName} gets banned for {ev.Reason} {ev.Duration}");
-        }
-
-        public void OnPlayerKick(PlayerKickEventArgs ev)
-        {
-            Log.Info($"Player {ev.Target.NickName} gets kicked for {ev.Reason}");
         }
         public void OnPlayerLeave(PlayerLeaveEventArgs ev)
         {
@@ -38,7 +24,7 @@ namespace Sapiox.Example
         }
         public void OnPlayerJoin(PlayerJoinEventArgs ev)
         {
-            Log.Info($"Player {ev.NickName} has joined the server!");
+            Log.Info($"Player {ev.NickName} has joined the server!" + config);
         }
     }
 }
