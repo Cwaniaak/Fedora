@@ -12,9 +12,11 @@ namespace Sapiox.Example
         )]
     public class Plugin : Sapiox.API.Plugin
     {
-        public override void Load()
+        public override IConfig config { get; set; } = new Config();
+        public override void OnLoad()
         {
-            base.Load();
+            base.OnLoad();
+            //Server.RegisterClientConsoleCommand(new ExampleCommand());
             PlayerEvent.Join += OnPlayerJoin;
             PlayerEvent.Leave += OnPlayerLeave;
         }
@@ -24,7 +26,7 @@ namespace Sapiox.Example
         }
         public void OnPlayerJoin(PlayerJoinEventArgs ev)
         {
-            Log.Info($"Player {ev.NickName} has joined the server!" + config);
+            Log.Info($"Player {ev.NickName} has joined the server!");
         }
     }
 }

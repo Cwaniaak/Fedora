@@ -1,3 +1,4 @@
+using Hints;
 using InventorySystem.Items;
 using RemoteAdmin;
 using UnityEngine;
@@ -14,7 +15,8 @@ namespace Sapiox.API
         public void Kick(string message) => ServerConsole.Disconnect(gameObject, message);
         public void Ban(int duration, string reason, string issuer = "Plugin") => PlayerManager.localPlayer.GetComponent<BanPlayer>().BanUser(gameObject, duration, reason, issuer);
         public void Broadcast(ushort time, string message) => GetComponent<global::Broadcast>().TargetAddElement(Hub.characterClassManager.connectionToClient, message, time, new global::Broadcast.BroadcastFlags());
-        
+        public void Hint(string message, float duration = 5f) => Hub.hints.Show(new TextHint(message, null, HintEffectPresets.FadeInAndOut(duration), duration));
+
         public Team Team => Hub.characterClassManager.CurRole.team;
         public Faction Faction => Hub.characterClassManager.Faction;
         public int Id => Hub.playerId;

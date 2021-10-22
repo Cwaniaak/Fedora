@@ -14,23 +14,15 @@ namespace Sapiox.Commands
 
         public string Description { get; } = "Plugins list";
 
-        public string pluginlist()
-        {
-            if (SapioxManager.Plugins.Count == 0)
-                return string.Join("\n- ", SapioxManager.Plugins);
-            else
-                return "No plugins loaded.";
-        }
-
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            List<String> activeplugins = new List<string>();
-            foreach(IPlugin plugin in SapioxManager.Plugins)
+            List<string> activeplugins = new List<string>();
+            foreach (IPlugin plugin in SapioxManager.Plugins)
             {
                 activeplugins.Add($"{plugin.Info.Name} (Version: {plugin.Info.Version})");
             }
 
-                response = $"Active Plugins:\n- " + string.Join("\n- ", activeplugins);
+            response = $"Active Plugins:\n- " + string.Join("\n- ", activeplugins);
             return true;
         }
     }

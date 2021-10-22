@@ -3,6 +3,7 @@
     "",
     "\\Sapiox",
     "\\Sapiox\\API",
+    "\\Sapiox\\Commands",
     "\\Sapiox\\Events",
     "\\Sapiox\\Events\\Patches"
   ],
