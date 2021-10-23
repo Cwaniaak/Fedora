@@ -107,6 +107,7 @@ C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Fedora.Example\bin\Debug\UnityEngine
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Fedora.Example\bin\Debug\UnityEngine.XRModule.dll
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Fedora.Example\bin\Debug\UnityEngine.InputModule.dll
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Fedora.Example\bin\Debug\UnityEngine.CoreModule.dll
+C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Fedora.Example\obj\Debug\Fedora.Example.csproj.CopyComplete
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Fedora.Example\bin\Debug\Assembly-CSharp.dll
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Fedora.Example\bin\Debug\Mirror.dll
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Fedora.Example\bin\Debug\System.Numerics.Vectors.dll

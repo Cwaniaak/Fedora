@@ -19,6 +19,7 @@
 /home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/Newtonsoft.Json.xml
 /home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/YamlDotNet.dll
 /home/jakub/RiderProjects/Sapiox/Sapiox/bin/Debug/YamlDotNet.xml
+C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Sapiox\obj\Debug\Sapiox.csproj.AssemblyReference.cache
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Sapiox\obj\Debug\Sapiox.csproj.CoreCompileInputs.cache
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Sapiox\obj\Debug\Sapiox.dll
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Sapiox\obj\Debug\Sapiox.pdb
@@ -35,5 +36,3 @@ C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Sapiox\bin\Debug\0Harmony.xml
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Sapiox\bin\Debug\Newtonsoft.Json.xml
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Sapiox\bin\Debug\YamlDotNet.xml
 C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Sapiox\bin\Debug\CommandSystem.Core_publicized.dll
-C:\Users\CCWAN\Source\Repos\Cwaniaak\Sapiox\Sapiox\bin\Debug\System.Numerics.Vectors.dll
-C:\Users\CCWAN\source\repos\Cwaniaak\Sapiox\Sapiox\obj\Debug\Sapiox.csproj.AssemblyReference.cache

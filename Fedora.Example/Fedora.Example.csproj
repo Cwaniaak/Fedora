@@ -36,12 +36,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\SCP Secret Laboratory Dedicated Server\SCPSL_Data\Managed\CommandSystem.Core.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="Sapiox">
+    <Reference Include="Sapiox, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Sapiox\bin\Debug\Sapiox.dll</HintPath>
     </Reference>
     <Reference Include="System" />

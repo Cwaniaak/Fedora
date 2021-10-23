@@ -50,7 +50,7 @@ namespace Sapiox
             {
                 if (!Directory.Exists(_configDirectory))
                     Directory.CreateDirectory(_configDirectory);
-
+                
                 return _configDirectory;
             }
             private set => _configDirectory = value;
@@ -97,7 +97,7 @@ namespace Sapiox
 
             Log.Info("Sapiox.Loader: Sapiox is now Loaded!");
         }
-
+        
         static void ActivatePlugins()
         {
             var paths = Directory.GetFiles(PluginDirectory, "*.dll").ToList();
@@ -137,7 +137,7 @@ namespace Sapiox
             {
                 try
                 {
-                    IPlugin plugin = (IPlugin)Activator.CreateInstance(infoTypePair.Value.Key);
+                    IPlugin plugin = (IPlugin) Activator.CreateInstance(infoTypePair.Value.Key);
                     plugin.Info = infoTypePair.Key;
                     plugin.PluginDirectory = GetPluginDirectory(plugin.Info);
                     Plugins.Add(plugin);
@@ -147,23 +147,27 @@ namespace Sapiox
                     Log.Error($"Sapiox.Loader: {infoTypePair.Value.Key.Assembly.GetName().Name} could not be activated!\n{e}");
                 }
             }
+            LoadPlugins();
+        }
 
+        public static string GetPluginDirectory(PluginInfo infos)
+        {
+            return Path.Combine(PluginDirectory, infos.Name);
+        }
+
+        public static void LoadPlugins()
+        {
             foreach (var plugin in Plugins)
             {
                 try
                 {
-                    plugin.OnLoad();
+                    plugin.Load();
                 }
                 catch (Exception e)
                 {
                     Log.Error($"Sapiox.Loader: {plugin.Info.Name} Loading failed!\n{e}");
                 }
             }
-        }
-
-        public static string GetPluginDirectory(PluginInfo infos)
-        {
-            return Path.Combine(PluginDirectory, infos.Name);
         }
     }
 }

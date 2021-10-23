@@ -13,10 +13,10 @@ namespace Sapiox.API
         
         string PluginDirectory { get; set; }
 
-        void OnLoad();
+        void Load();
     }
 
-    public abstract class Plugin
+    public abstract class Plugin : IPlugin
     {
         public PluginInfo Info { get; set; }
 
@@ -24,7 +24,7 @@ namespace Sapiox.API
 
         private string _pluginDirectory;
 
-        public virtual void OnLoad()
+        public virtual void Load()
         {
             if(!config.Load) return;
             Config.Load();
