@@ -6,29 +6,26 @@ using UnityEngine;
 
 namespace Sapiox.Events.Patches
 {
-    public class PlayerBan
+    [HarmonyPatch(typeof(BanPlayer), nameof(BanPlayer.BanUser), typeof(GameObject), typeof(long), typeof(string),
+        typeof(string), typeof(bool))]
+    internal static class PlayerBan
     {
-        [HarmonyPatch(typeof(BanPlayer), nameof(BanPlayer.BanUser), typeof(GameObject), typeof(long), typeof(string),
-            typeof(string), typeof(bool))]
-        internal static class PlayerBanPatch
+        [HarmonyPrefix]
+        private static bool BanUser(GameObject user, long duration, string reason, string issuer, bool isGlobalBan)
         {
-            [HarmonyPrefix]
-            private static bool BanUser(GameObject user, long duration, string reason, bool isGlobalBan)
+            try
             {
-                try
-                {
-                    var Target = Server.GetPlayer(user);
-                    
-                    if (duration == 0) Handlers.Player.OnKick(Target, ref reason);
-                    else Handlers.Player.OnBan(Target, ref duration, ref isGlobalBan, ref reason);
+                var Target = Server.GetPlayer(user);
 
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    Log.Error($"{typeof(PlayerBanPatch).FullName}.{nameof(BanUser)}:\n{e}");
-                    return true;
-                }
+                if (duration == 0) Handlers.Player.OnKick(Target, Server.GetPlayer(issuer), ref reason);
+                else Handlers.Player.OnBan(Target, Server.GetPlayer(issuer), ref isGlobalBan, ref duration, ref reason);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Log.Error($"{typeof(PlayerBan).FullName}.{nameof(BanUser)}:\n{e}");
+                return true;
             }
         }
     }

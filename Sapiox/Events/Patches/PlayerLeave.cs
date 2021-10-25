@@ -7,7 +7,7 @@ using Mirror;
 namespace Sapiox.Events.Patches
 {
     [HarmonyPatch(typeof(CustomNetworkManager), nameof(CustomNetworkManager.OnServerDisconnect))]
-    internal static class PlayerLeavePatch
+    internal static class PlayerLeave
     {
         [HarmonyPrefix]
         private static void OnServerDisconnect(NetworkConnection conn)
@@ -19,7 +19,7 @@ namespace Sapiox.Events.Patches
             }
             catch (Exception e)
             {
-                Log.Error($"{typeof(PlayerLeavePatch).FullName}.{nameof(OnServerDisconnect)}:\n{e}");
+                Log.Error($"{typeof(PlayerLeave).FullName}.{nameof(OnServerDisconnect)}:\n{e}");
             }
         }
     }

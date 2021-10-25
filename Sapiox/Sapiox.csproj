@@ -87,9 +87,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Configs.cs" />
+    <Compile Include="API\Config.cs" />
+    <Compile Include="API\FakePlayer.cs" />
     <Compile Include="API\IConfig.cs" />
     <Compile Include="API\Log.cs" />
+    <Compile Include="API\Map.cs" />
     <Compile Include="API\Player.cs" />
     <Compile Include="API\Plugin.cs" />
     <Compile Include="API\PluginInfo.cs" />
@@ -98,12 +100,15 @@
     <Compile Include="Events\EventArgs\Player.cs" />
     <Compile Include="Events\Handlers\EventHandler.cs" />
     <Compile Include="Events\Handlers\Player.cs" />
-    <Compile Include="Events\Handlers\Server.cs" />
+    <Compile Include="Events\Handlers\Round.cs" />
+    <Compile Include="Events\Patches\InteractDoor.cs" />
     <Compile Include="Events\Patches\PlayerBan.cs" />
     <Compile Include="Events\Patches\PlayerComponent.cs" />
     <Compile Include="Events\Patches\PlayerJoin.cs" />
     <Compile Include="Events\Patches\PlayerLeave.cs" />
     <Compile Include="Events\Patches\RoundEnd.cs" />
+    <Compile Include="Events\Patches\RoundRestart.cs" />
+    <Compile Include="Events\Patches\RoundStart.cs" />
     <Compile Include="Events\Patches\ServerName.cs" />
     <Compile Include="Events\Patches\WaitingForPlayers.cs" />
     <Compile Include="SapioxManager.cs" />

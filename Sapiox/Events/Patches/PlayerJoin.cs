@@ -10,7 +10,7 @@ using HarmonyLib;
 namespace Sapiox.Events.Patches
 {
     [HarmonyPatch(typeof(NicknameSync), nameof(NicknameSync.UpdateNickname))]
-    internal static class PlayerJoinPatch
+    internal static class PlayerJoin
     {
         [HarmonyPrefix]
         private static void UpdateNickname(NicknameSync __instance, ref string n)
@@ -22,7 +22,7 @@ namespace Sapiox.Events.Patches
             }
             catch (Exception e)
             {
-                Log.Error($"{typeof(PlayerJoinPatch).FullName}.{nameof(UpdateNickname)}:\n{e}");
+                Log.Error($"{typeof(PlayerJoin).FullName}.{nameof(UpdateNickname)}:\n{e}");
             }
         }
     }

@@ -15,6 +15,9 @@ namespace Sapiox.API
 {
     public static class Server
     {
+        public static List<Player> Players => PlayerManager.players.Select(x => x.gameObject.GetComponent<Player>()).ToList();
+        public static List<Player> FakePlayers = new List<Player>();
+
         public static string Name
         {
             get => ServerConsole._serverName;
@@ -67,7 +70,16 @@ namespace Sapiox.API
                 var response = (HttpWebResponse) wr.GetResponse();
             }
         }
+        public static Player Host
+        {
+            get
+            {
+                if (PlayerManager.localPlayer.GetComponent<Player>() == null)
+                    PlayerManager.localPlayer.AddComponent<Player>();
 
+                return PlayerManager.localPlayer.GetComponent<Player>();
+            }
+        }
         public static string Ip
         {
             get => ServerConsole.Ip;
@@ -86,55 +98,27 @@ namespace Sapiox.API
             set => ServerConsole.FriendlyFire = value;
         }
 
-        public static Player GetPlayer(NetworkConnection connection)
-        {
-            return GetPlayer(connection.identity);
-        }
+        public static Player GetPlayer(NetworkConnection connection) => GetPlayer(connection.identity);
 
-        public static Player GetPlayer(MonoBehaviour mono)
-        {
-            return mono?.gameObject?.GetComponent<Player>();
-        }
+        public static Player GetPlayer(ICommandSender sender) => GetPlayer((sender as CommandSender).SenderId);
 
-        public static Player GetPlayer(GameObject gameObject)
-        {
-            return gameObject?.GetComponent<Player>();
-        }
+        public static Player GetPlayer(MonoBehaviour mono) => mono?.gameObject?.GetComponent<Player>();
 
-        public static Player GetPlayer(PlayableScps.PlayableScp scp)
-        {
-            return GetPlayer(scp?.Hub);
-        }
+        public static Player GetPlayer(GameObject gameObject) => gameObject?.GetComponent<Player>();
 
-        public static List<Player> GetPlayers(RoleType role)
-        {
-            return Players.Where(x => x.Role == role).ToList();
-        }
+        public static Player GetPlayer(PlayableScps.PlayableScp scp)=> GetPlayer(scp?.Hub);
 
-        public static List<Player> GetPlayers(Team team)
-        {
-            return Players.Where(x => x.Team == team).ToList();
-        }
+        public static List<Player> GetPlayers(RoleType role) => Players.Where(x => x.Role == role).ToList();
 
-        public static List<Player> GetPlayers(Faction fraction)
-        {
-            return Players.Where(x => x.Faction == fraction).ToList();
-        }
+        public static List<Player> GetPlayers(Team team) => Players.Where(x => x.Team == team).ToList();
 
-        public static List<Player> GetPlayers(RoleType[] roles)
-        {
-            return Players.Where(x => roles.Any(y => x.Role == y)).ToList();
-        }
+        public static List<Player> GetPlayers(Faction fraction) => Players.Where(x => x.Faction == fraction).ToList();
 
-        public static List<Player> GetPlayers(Team[] teams)
-        {
-            return Players.Where(x => teams.Any(y => x.Team == y)).ToList();
-        }
+        public static List<Player> GetPlayers(RoleType[] roles) => Players.Where(x => roles.Any(y => x.Role == y)).ToList();
 
-        public static List<Player> GetPlayers(Faction[] fractions)
-        {
-            return Players.Where(x => fractions.Any(y => x.Faction == y)).ToList();
-        }
+        public static List<Player> GetPlayers(Team[] teams) => Players.Where(x => teams.Any(y => x.Team == y)).ToList();
+
+        public static List<Player> GetPlayers(Faction[] fractions) => Players.Where(x => fractions.Any(y => x.Faction == y)).ToList();
 
         public static Player GetPlayer(int playerid) => Players.FirstOrDefault(x => x.Id == playerid);
 
@@ -164,22 +148,10 @@ namespace Sapiox.API
             return players.FirstOrDefault(x => x.NickName.ToLower() == argument.ToLower());
         }
 
-        public static List<Player> Players =>
-            PlayerManager.players.Select(x => x.gameObject.GetComponent<Player>()).ToList();
+        public static void RegisterRemoteAdminCommand(ICommand command) => CommandProcessor.RemoteAdminCommandHandler.RegisterCommand(command);
 
-        public static void RegisterRemoteAdminCommand(ICommand command)
-        {
-            CommandProcessor.RemoteAdminCommandHandler.RegisterCommand(command);
-        }
+        public static void RegisterServerConsoleCommand(ICommand command) => GameCore.Console.singleton.ConsoleCommandHandler.RegisterCommand(command);
 
-        public static void RegisterServerConsoleCommand(ICommand command)
-        {
-            GameCore.Console.singleton.ConsoleCommandHandler.RegisterCommand(command);
-        }
-
-        public static void RegisterClientConsoleCommand(ICommand command)
-        {
-            QueryProcessor.DotCommandHandler.RegisterCommand(command);
-        }
+        public static void RegisterClientConsoleCommand(ICommand command) => QueryProcessor.DotCommandHandler.RegisterCommand(command);
     }
 }

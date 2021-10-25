@@ -14,7 +14,7 @@ namespace Sapiox.Events.Patches
             {
                 try
                 {
-                    Handlers.Server.OnWaitingForPlayers();
+                    Handlers.Round.OnWaitingForPlayers();
                 }
                 catch (Exception e)
                 {

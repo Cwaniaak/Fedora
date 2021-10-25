@@ -1,5 +1,7 @@
-﻿using Sapiox.API;
+﻿using MEC;
+using Sapiox.API;
 using Sapiox.Events.EventArgs;
+using UnityEngine;
 using PlayerEvent = Sapiox.Events.Handlers.Player;
 
 namespace Sapiox.Example
@@ -17,20 +19,22 @@ namespace Sapiox.Example
         public override void Load()
         {
             base.Load();
+            Server.RegisterRemoteAdminCommand(new ExampleCommand());
             PlayerEvent.Join += OnPlayerJoin;
             PlayerEvent.Leave += OnPlayerLeave;
             PlayerEvent.Ban += OnPlayerBan;
             PlayerEvent.Kick += OnPlayerKick;
+            Sapiox.Events.Handlers.Round.Start += OnRoundStart;
         }
 
         public void OnPlayerBan(PlayerBanEventArgs ev)
         {
-            Log.Info($"Player {ev.Target.NickName} gets banned for {ev.Reason} {ev.Duration}");
+            Log.Info($"Player {ev.Target.NickName} has been banned for {ev.Reason} {ev.Duration}");
         }
 
         public void OnPlayerKick(PlayerKickEventArgs ev)
         {
-            Log.Info($"Player {ev.Target.NickName} gets kicked for {ev.Reason}");
+            Log.Info($"Player {ev.Target.NickName} has been kicked for {ev.Reason}");
         }
         public void OnPlayerLeave(PlayerLeaveEventArgs ev)
         {
@@ -39,6 +43,19 @@ namespace Sapiox.Example
         public void OnPlayerJoin(PlayerJoinEventArgs ev)
         {
             Log.Info($"Player {ev.NickName} has joined the server!");
+        }
+
+        public void OnRoundStart()
+        {
+            foreach (Player ply in Server.Players)
+            {
+                Timing.CallDelayed(5f, () =>
+                {
+                    Log.Info("debug 1");
+                    FakePlayer fp = new FakePlayer(ply.Position);
+                    Log.Info("debug 2");
+                });
+            }
         }
     }
 }

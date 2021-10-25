@@ -18,7 +18,7 @@ namespace Sapiox.Events.Patches
             {
                 try
                 {
-                    Handlers.Server.OnRoundEnd();
+                    Handlers.Round.OnRoundEnd();
                 }
                 catch (Exception e)
                 {

@@ -37,7 +37,10 @@ namespace Sapiox.API
                 }
                 else
                 {
-                    ConfigList.Add(plugin.Info.Name, (IConfig)Deserializer.Deserialize(Serializer.Serialize(rawConfig), plugin.config.GetType()));
+                    if (!ConfigList.ContainsKey(plugin.Info.Name))
+                    {
+                        ConfigList.Add(plugin.Info.Name, (IConfig)Deserializer.Deserialize(Serializer.Serialize(rawConfig), plugin.config.GetType()));
+                    }
 
                     plugin.config = ConfigList[plugin.Info.Name];
                 }
