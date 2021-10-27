@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Config.cs" />
+    <Compile Include="API\Enum\MovementDirection.cs" />
     <Compile Include="API\FakePlayer.cs" />
     <Compile Include="API\IConfig.cs" />
     <Compile Include="API\Log.cs" />

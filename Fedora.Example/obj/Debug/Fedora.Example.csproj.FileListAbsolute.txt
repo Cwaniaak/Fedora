@@ -52,4 +52,3 @@ C:\Users\CCWAN\source\repos\Cwaniaak\Sapiox\Fedora.Example\bin\Debug\Newtonsoft.
 C:\Users\CCWAN\source\repos\Cwaniaak\Sapiox\Fedora.Example\obj\Debug\Fedora.Example.csproj.AssemblyReference.cache
 C:\Users\CCWAN\source\repos\Cwaniaak\Sapiox\Fedora.Example\obj\Debug\Sapiox.Example.dll
 C:\Users\CCWAN\source\repos\Cwaniaak\Sapiox\Fedora.Example\obj\Debug\Sapiox.Example.pdb
-C:\Users\CCWAN\source\repos\Cwaniaak\Sapiox\Fedora.Example\obj\Debug\Fedora.Example.csproj.CopyComplete

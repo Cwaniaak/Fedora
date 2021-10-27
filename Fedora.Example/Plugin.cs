@@ -1,6 +1,8 @@
 ﻿using MEC;
 using Sapiox.API;
 using Sapiox.Events.EventArgs;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using PlayerEvent = Sapiox.Events.Handlers.Player;
 
@@ -20,11 +22,11 @@ namespace Sapiox.Example
         {
             base.Load();
             Server.RegisterRemoteAdminCommand(new ExampleCommand());
+            Server.RegisterRemoteAdminCommand(new SpawnFakePlayer());
             PlayerEvent.Join += OnPlayerJoin;
             PlayerEvent.Leave += OnPlayerLeave;
             PlayerEvent.Ban += OnPlayerBan;
             PlayerEvent.Kick += OnPlayerKick;
-            Sapiox.Events.Handlers.Round.Start += OnRoundStart;
         }
 
         public void OnPlayerBan(PlayerBanEventArgs ev)
@@ -43,19 +45,6 @@ namespace Sapiox.Example
         public void OnPlayerJoin(PlayerJoinEventArgs ev)
         {
             Log.Info($"Player {ev.NickName} has joined the server!");
-        }
-
-        public void OnRoundStart()
-        {
-            foreach (Player ply in Server.Players)
-            {
-                Timing.CallDelayed(5f, () =>
-                {
-                    Log.Info("debug 1");
-                    FakePlayer fp = new FakePlayer(ply.Position);
-                    Log.Info("debug 2");
-                });
-            }
         }
     }
 }

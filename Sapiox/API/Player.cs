@@ -81,6 +81,14 @@ namespace Sapiox.API
             get => Hub.playerMovementSync.GetRealPosition();
             set => Hub.playerMovementSync.OverridePosition(value, 0f);
         }
+        public Vector2 Rotation
+        {
+            get => Hub.playerMovementSync.RotationSync;
+            set => Hub.playerMovementSync.NetworkRotationSync = value;
+        }
+
+        public Transform CameraReference => Hub.PlayerCameraReference;
+        public PlayerMovementSync MovementSync => Hub.playerMovementSync;
 
         public bool IsUsingVoiceChat => Radio.UsingVoiceChat;
 

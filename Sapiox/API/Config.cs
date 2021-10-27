@@ -26,9 +26,7 @@ namespace Sapiox.API
         {
             foreach (IPlugin plugin in SapioxManager.Plugins)
             {
-                if (!File.Exists(path)) File.Create(path);
-                
-                Dictionary<string, object> rawConfigs = Deserializer.Deserialize<Dictionary<string, object>>(File.ReadAllText(path)) ?? new Dictionary<string, object>();
+                Dictionary<string, object> rawConfigs = Deserializer.Deserialize<Dictionary<string, object>>(File.Exists(path)?File.ReadAllText(path): " ") ?? new Dictionary<string, object>();
                 
                 if (!rawConfigs.TryGetValue(plugin.Info.Name, out object rawConfig))
                 {

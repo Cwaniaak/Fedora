@@ -3,8 +3,10 @@ using InventorySystem.Items.Firearms;
 using InventorySystem.Items.Firearms.Attachments;
 using InventorySystem.Items.Firearms.BasicMessages;
 using InventorySystem.Items.Firearms.Modules;
+using MEC;
 using Mirror;
 using RemoteAdmin;
+using Sapiox.API.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +20,30 @@ namespace Sapiox.API
     {
         public Player Player { get; internal set; }
         public GameObject GameObject { get; internal set; }
-        public string NickName => Player.Hub.nicknameSync.Network_myNickSync;
-        public RoleType Role => Player.Hub.characterClassManager.CurClass;
+        public MovementDirection MoveDirection { get; set; }
+        public float SneakSpeed { get; set; } = 1.8f;
+        public float WalkSpeed { get; set; }
+        public float RunSpeed { get; set; }
+
+        public PlayerMovementState MoveState
+        {
+            get => Player.Hub.animationController.MoveState;
+            set
+            {
+                Player.Hub.animationController.MoveState = value;
+                Player.Hub.animationController.RpcReceiveState((byte)value);
+            }
+        }
+        public string NickName
+        {
+            get => Player.Hub.nicknameSync.Network_myNickSync;
+            set => Player.Hub.nicknameSync.Network_myNickSync = value;
+        }
+        public RoleType Role
+        {
+            get => Player.Hub.characterClassManager.CurClass;
+            set => Player.Hub.characterClassManager.CurClass = value;
+        }
         public Vector3 Position
         {
             get => Player.transform.position;
@@ -29,8 +53,27 @@ namespace Sapiox.API
                 Player.Hub.playerMovementSync.RealModelPosition = value;
             }
         }
+        public Vector3 Scale
+        {
+            get => Player.transform.localScale;
+            set => Player.transform.localScale = value;
+        }
+        public Vector2 Rotation
+        {
+            get => Player.Rotation;
+            set
+            {
+                Player.Rotation = value;
+                Player.Hub.PlayerCameraReference.rotation = Quaternion.Euler(new Vector3(value.x, value.y, 90f));
+            }
+        }
+        public void RotateToPosition(Vector3 pos)
+        {
+            var rot = Quaternion.LookRotation((pos - GameObject.transform.position).normalized);
+            Rotation = new Vector2(rot.eulerAngles.x, rot.eulerAngles.y);
+        }
 
-        public FakePlayer(Vector3 pos, RoleType role = RoleType.ClassD, string nickname = "FakePlayer", float health = 100, int maxHealth = 150, bool godmode = false)
+        public FakePlayer(Vector3 pos, Quaternion rot, RoleType role = RoleType.ClassD, string nickname = "FakePlayer", bool godmode = false)
         {
             try
             {
@@ -38,21 +81,22 @@ namespace Sapiox.API
                 GameObject = obj;
 
                 Player = Server.GetPlayer(GameObject);
-
-
-                Player.transform.localScale = Vector3.one;
-                Player.transform.position = pos;
-                Player.Hub.playerMovementSync.RealModelPosition = pos;
+                Scale = Vector3.one;
+                Position = pos;
+                Rotation = new Vector2(rot.eulerAngles.x, rot.eulerAngles.y);
                 Player.Hub.queryProcessor.NetworkPlayerId = QueryProcessor._idIterator;
                 Player.Hub.queryProcessor._ipAddress = Server.Host.IPAddress;
-                Player.Hub.characterClassManager.CurClass = role;
-                Player.Hub.nicknameSync.Network_myNickSync = nickname;
+                Role = role;
+                NickName = nickname;
                 Player.GodMode = godmode;
-                Player.Health = health;
-                Player.MaxHealth = maxHealth;
+                Player.Health = Player.MaxHealth;
+                Player.MaxHealth = Player.MaxHealth = Player.Hub.characterClassManager.Classes.SafeGet((int)Player.Role).maxHP;
                 Player.RankName = "Admin";
                 Player.RankColor = "red";
                 Player.Hub.playerMovementSync.NetworkGrounded = true;
+                RunSpeed = CharacterClassManager._staticClasses[(int)role].runSpeed;
+                WalkSpeed = CharacterClassManager._staticClasses[(int)role].walkSpeed;
+                Timing.RunCoroutine(Update());
 
 
                 NetworkServer.Spawn(GameObject);
@@ -78,11 +122,88 @@ namespace Sapiox.API
 
         public void DeSpawn()
         {
-            NetworkServer.UnSpawn(GameObject);
+            UnityEngine.Object.Destroy(GameObject);
             Server.FakePlayers.Remove(Player);
         }
-    }
 
+        private IEnumerator<float> Update()
+        {
+            for (; ; )
+            {
+                yield return MEC.Timing.WaitForSeconds(0.1f);
+                try
+                {
+                    if (GameObject == null) yield break;
+                    if (MoveDirection == MovementDirection.None)
+                    {
+                        continue;
+                    }
+
+                    var wall = false;
+                    var speed = 0f;
+
+                    switch (MoveState)
+                    {
+                        case PlayerMovementState.Sneaking:
+                            speed = SneakSpeed;
+                            break;
+
+                        case PlayerMovementState.Sprinting:
+                            speed = RunSpeed * Server.SprintSpeed;
+                            break;
+
+                        case PlayerMovementState.Walking:
+                            speed = WalkSpeed * Server.WalkSpeed;
+                            break;
+                    }
+
+                    switch (MoveDirection)
+                    {
+                        case MovementDirection.Forward:
+                            var pos = Position + Player.CameraReference.forward / 10 * speed;
+
+                            if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
+                                Player.MovementSync.OverridePosition(pos, 0f, true);
+                            else wall = true;
+                            break;
+
+                        case MovementDirection.BackWards:
+                            pos = Position - Player.CameraReference.forward / 10 * speed;
+
+                            if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
+                                Player.MovementSync.OverridePosition(pos, 0f, true);
+                            else wall = true;
+                            break;
+
+                        case MovementDirection.Right:
+                            pos = Position + Quaternion.AngleAxis(90, Vector3.up) * Player.CameraReference.forward / 10 * speed;
+
+                            if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
+                                Player.MovementSync.OverridePosition(pos, 0f, true);
+                            else wall = true;
+                            break;
+
+                        case MovementDirection.Left:
+                            pos = Position - Quaternion.AngleAxis(90, Vector3.up) * Player.CameraReference.forward / 10 * speed;
+
+                            if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
+                                Player.MovementSync.OverridePosition(pos, 0f, true);
+                            else wall = true;
+                            break;
+                    }
+
+                    if (wall)
+                    {
+                        MoveDirection = MovementDirection.None;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error($"FakePlayer Update Failed:\n{e}");
+                }
+            }
+        }
+    }
     //patches
 
     [HarmonyPatch(typeof(PlayerMovementSync), nameof(PlayerMovementSync.OverridePosition))]

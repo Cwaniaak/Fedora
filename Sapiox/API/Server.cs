@@ -24,6 +24,18 @@ namespace Sapiox.API
             set => ServerConsole._serverName = value;
         }
 
+        public static float WalkSpeed
+        {
+            get => ServerConfigSynchronizer.Singleton.NetworkHumanWalkSpeedMultiplier;
+            set => ServerConfigSynchronizer.Singleton.NetworkHumanWalkSpeedMultiplier = value;
+        }
+
+        public static float SprintSpeed
+        {
+            get => ServerConfigSynchronizer.Singleton.NetworkHumanSprintSpeedMultiplier;
+            set => ServerConfigSynchronizer.Singleton.NetworkHumanSprintSpeedMultiplier = value;
+        }
+
         public static void SendDiscordWebhook(string token, string username, string content, string description = null,
             bool embed = false, int embedColor = 65417, string embedTitle = null, string thumbnailUrl = null)
         {
