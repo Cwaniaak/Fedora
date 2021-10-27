@@ -23,9 +23,9 @@ namespace Sapiox.Events.Handlers
             Leave?.Invoke(ev);
         }
 
-        public static void OnBan(API.Player target, API.Player issuer,ref bool globalban, ref long duration, ref string reason)
+        public static void OnBan(API.Player target, API.Player issuer,ref bool globalban, ref long duration, ref string reason, ref bool allow)
         {
-            var ev = new PlayerBanEventArgs {Target = target, Issuer = issuer, IsGlobalBan = globalban, Duration = duration, Reason = reason};
+            var ev = new PlayerBanEventArgs {Target = target, Issuer = issuer, IsGlobalBan = globalban, Duration = duration, Reason = reason, Allow = allow};
             Ban?.Invoke(ev);
         }
 

@@ -1,9 +1,5 @@
-﻿using MEC;
-using Sapiox.API;
+﻿using Sapiox.API;
 using Sapiox.Events.EventArgs;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 using PlayerEvent = Sapiox.Events.Handlers.Player;
 
 namespace Sapiox.Example
@@ -22,7 +18,6 @@ namespace Sapiox.Example
         {
             base.Load();
             Server.RegisterRemoteAdminCommand(new ExampleCommand());
-            Server.RegisterRemoteAdminCommand(new SpawnFakePlayer());
             PlayerEvent.Join += OnPlayerJoin;
             PlayerEvent.Leave += OnPlayerLeave;
             PlayerEvent.Ban += OnPlayerBan;

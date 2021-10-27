@@ -15,12 +15,13 @@ namespace Sapiox.Events.Patches
         {
             try
             {
+                var allow = true;
                 var Target = Server.GetPlayer(user);
 
                 if (duration == 0) Handlers.Player.OnKick(Target, Server.GetPlayer(issuer), ref reason);
-                else Handlers.Player.OnBan(Target, Server.GetPlayer(issuer), ref isGlobalBan, ref duration, ref reason);
+                else Handlers.Player.OnBan(Target, Server.GetPlayer(issuer), ref isGlobalBan, ref duration, ref reason, ref allow);
 
-                return true;
+                return allow;
             }
             catch (Exception e)
             {

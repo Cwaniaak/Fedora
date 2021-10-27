@@ -21,6 +21,7 @@ namespace Sapiox.Events.EventArgs
         public string Reason { get; set; }
         public bool IsGlobalBan { get; set; }
         public long Duration { get; set; }
+        public bool Allow { get; set; }
     }
 
     public class PlayerKickEventArgs : System.EventArgs
