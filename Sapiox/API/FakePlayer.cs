@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using InventorySystem;
 using InventorySystem.Items.Firearms;
 using InventorySystem.Items.Firearms.Attachments;
 using InventorySystem.Items.Firearms.BasicMessages;
@@ -24,6 +25,12 @@ namespace Sapiox.API
         public float SneakSpeed { get; set; } = 1.8f;
         public float WalkSpeed { get; set; }
         public float RunSpeed { get; set; }
+
+        private ItemType _currentItem;
+        public bool IsWallOnFront { get; internal set; }
+        public bool IsWallOnRight { get; internal set; }
+        public bool IsWallOnLeft { get; internal set; }
+        public bool IsWallBehind { get; internal set; }
 
         public PlayerMovementState MoveState
         {
@@ -53,6 +60,15 @@ namespace Sapiox.API
                 Player.Hub.playerMovementSync.RealModelPosition = value;
             }
         }
+        public ItemType CurrentItem
+        {
+            get => _currentItem;
+            set
+            {
+                Player.Hub.inventory.NetworkCurItem = new InventorySystem.Items.ItemIdentifier(value, 0);
+                _currentItem = value;
+            }
+        }
         public Vector3 Scale
         {
             get => Player.transform.localScale;
@@ -77,8 +93,7 @@ namespace Sapiox.API
         {
             try
             {
-                GameObject obj = UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
-                GameObject = obj;
+                GameObject = UnityEngine.Object.Instantiate(NetworkManager.singleton.playerPrefab);
 
                 Player = Server.GetPlayer(GameObject);
                 Scale = Vector3.one;
@@ -101,6 +116,7 @@ namespace Sapiox.API
 
                 NetworkServer.Spawn(GameObject);
                 Server.FakePlayers.Add(Player);
+                PlayerManager.AddPlayer(GameObject, CustomNetworkManager.slots);
             }
             catch (Exception e)
             {
@@ -130,16 +146,12 @@ namespace Sapiox.API
         {
             for (; ; )
             {
-                yield return MEC.Timing.WaitForSeconds(0.1f);
+                yield return Timing.WaitForSeconds(0.1f);
                 try
                 {
                     if (GameObject == null) yield break;
-                    if (MoveDirection == MovementDirection.None)
-                    {
-                        continue;
-                    }
+                    if (MoveDirection == MovementDirection.None) continue;
 
-                    var wall = false;
                     var speed = 0f;
 
                     switch (MoveState)
@@ -160,42 +172,51 @@ namespace Sapiox.API
                     switch (MoveDirection)
                     {
                         case MovementDirection.Forward:
-                            var pos = Position + Player.CameraReference.forward / 10 * speed;
+                            var pos = Position + Player.Hub.PlayerCameraReference.forward / 10 * speed;
 
                             if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
+                            {
                                 Player.MovementSync.OverridePosition(pos, 0f, true);
-                            else wall = true;
+                                IsWallOnFront = false;
+                            }
+                            else IsWallOnFront = true;
                             break;
 
                         case MovementDirection.BackWards:
-                            pos = Position - Player.CameraReference.forward / 10 * speed;
+                            pos = Position - Player.Hub.PlayerCameraReference.forward / 10 * speed;
 
                             if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
+                            {
                                 Player.MovementSync.OverridePosition(pos, 0f, true);
-                            else wall = true;
+                                IsWallBehind = false;
+                            }
+                            else IsWallBehind = true;
                             break;
 
                         case MovementDirection.Right:
-                            pos = Position + Quaternion.AngleAxis(90, Vector3.up) * Player.CameraReference.forward / 10 * speed;
+                            pos = Position + Quaternion.AngleAxis(90, Vector3.up) * Player.Hub.PlayerCameraReference.forward / 10 * speed;
 
                             if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
+                            {
                                 Player.MovementSync.OverridePosition(pos, 0f, true);
-                            else wall = true;
+                                IsWallOnRight = false;
+                            }
+                            else IsWallOnRight = true;
                             break;
 
                         case MovementDirection.Left:
-                            pos = Position - Quaternion.AngleAxis(90, Vector3.up) * Player.CameraReference.forward / 10 * speed;
+                            pos = Position - Quaternion.AngleAxis(90, Vector3.up) * Player.Hub.PlayerCameraReference.forward / 10 * speed;
 
                             if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
+                            {
                                 Player.MovementSync.OverridePosition(pos, 0f, true);
-                            else wall = true;
+                                IsWallOnLeft = false;
+                            }
+                            else IsWallOnLeft = true;
                             break;
                     }
 
-                    if (wall)
-                    {
-                        MoveDirection = MovementDirection.None;
-                    }
+                    if (IsWallOnLeft || IsWallOnRight || IsWallBehind || IsWallOnFront) MoveDirection = MovementDirection.None;
                 }
                 catch (Exception e)
                 {

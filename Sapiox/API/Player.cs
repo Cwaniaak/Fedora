@@ -11,7 +11,9 @@ namespace Sapiox.API
         public void RemoveDisplayInfo(PlayerInfoArea playerInfo) => Hub.nicknameSync.Network_playerInfoToShow &= ~playerInfo;
 
         public void AddDisplayInfo(PlayerInfoArea playerInfo) => Hub.nicknameSync.Network_playerInfoToShow |= playerInfo;
-        
+
+        private ItemType _currentItem;
+
         public void Kick(string message) => ServerConsole.Disconnect(gameObject, message);
         public void Ban(int duration, string reason, string issuer = "Plugin") => PlayerManager.localPlayer.GetComponent<BanPlayer>().BanUser(gameObject, duration, reason, issuer);
         public void Broadcast(ushort time, string message) => GetComponent<global::Broadcast>().TargetAddElement(Hub.characterClassManager.connectionToClient, message, time, new global::Broadcast.BroadcastFlags());
@@ -87,7 +89,15 @@ namespace Sapiox.API
             set => Hub.playerMovementSync.NetworkRotationSync = value;
         }
 
-        public Transform CameraReference => Hub.PlayerCameraReference;
+        public ItemType CurrentItem
+        {
+            get => _currentItem;
+            set
+            {
+                Hub.inventory.NetworkCurItem = new ItemIdentifier(value, 0);
+                _currentItem = value;
+            }
+        }
         public PlayerMovementSync MovementSync => Hub.playerMovementSync;
 
         public bool IsUsingVoiceChat => Radio.UsingVoiceChat;
@@ -98,12 +108,6 @@ namespace Sapiox.API
         {
             get => Hub.nicknameSync.Network_displayName;
             set => Hub.nicknameSync.Network_displayName = value;
-        }
-        
-        public ItemIdentifier CurrentItem
-        {
-            get => Hub.inventory.NetworkCurItem;
-            set => Hub.inventory.NetworkCurItem = value;
         }
         
         public Transform Camera

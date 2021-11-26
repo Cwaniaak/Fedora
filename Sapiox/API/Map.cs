@@ -1,4 +1,5 @@
-﻿using InventorySystem.Items.Firearms.Attachments;
+﻿using Interactables.Interobjects.DoorUtils;
+using InventorySystem.Items.Firearms.Attachments;
 using Mirror;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,9 @@ namespace Sapiox.API
 {
     public static class Map
     {
+        public static IReadOnlyCollection<DoorVariant> Doors = (IReadOnlyCollection<DoorVariant>)UnityEngine.Object.FindObjectOfType<DoorVariant>();
         public static List<WorkstationController> WorkStations => WorkstationController.AllWorkstations.ToList();
+        public static List<ShootingTarget> ShootingTargets = new List<ShootingTarget>();
         public static void PlayFemurBrakerSound() => ReferenceHub.HostHub.playerInteract.RpcContain106(null);
         public static AlphaWarheadController Warhead => AlphaWarheadController.Host;
         public static WorkstationController SpawnWorkStation(Vector3 position, Vector3 rotation, Vector3 scale)
