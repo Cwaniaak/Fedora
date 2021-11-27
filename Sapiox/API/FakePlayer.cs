@@ -27,10 +27,6 @@ namespace Sapiox.API
         public float RunSpeed { get; set; }
 
         private ItemType _currentItem;
-        public bool IsWallOnFront { get; internal set; }
-        public bool IsWallOnRight { get; internal set; }
-        public bool IsWallOnLeft { get; internal set; }
-        public bool IsWallBehind { get; internal set; }
 
         public PlayerMovementState MoveState
         {
@@ -146,12 +142,16 @@ namespace Sapiox.API
         {
             for (; ; )
             {
-                yield return Timing.WaitForSeconds(0.1f);
+                yield return MEC.Timing.WaitForSeconds(0.1f);
                 try
                 {
                     if (GameObject == null) yield break;
-                    if (MoveDirection == MovementDirection.None) continue;
+                    if (MoveDirection == MovementDirection.None)
+                    {
+                        continue;
+                    }
 
+                    var wall = false;
                     var speed = 0f;
 
                     switch (MoveState)
@@ -175,48 +175,39 @@ namespace Sapiox.API
                             var pos = Position + Player.Hub.PlayerCameraReference.forward / 10 * speed;
 
                             if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
-                            {
                                 Player.MovementSync.OverridePosition(pos, 0f, true);
-                                IsWallOnFront = false;
-                            }
-                            else IsWallOnFront = true;
+                            else wall = true;
                             break;
 
                         case MovementDirection.BackWards:
                             pos = Position - Player.Hub.PlayerCameraReference.forward / 10 * speed;
 
                             if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
-                            {
                                 Player.MovementSync.OverridePosition(pos, 0f, true);
-                                IsWallBehind = false;
-                            }
-                            else IsWallBehind = true;
+                            else wall = true;
                             break;
 
                         case MovementDirection.Right:
                             pos = Position + Quaternion.AngleAxis(90, Vector3.up) * Player.Hub.PlayerCameraReference.forward / 10 * speed;
 
                             if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
-                            {
                                 Player.MovementSync.OverridePosition(pos, 0f, true);
-                                IsWallOnRight = false;
-                            }
-                            else IsWallOnRight = true;
+                            else wall = true;
                             break;
 
                         case MovementDirection.Left:
                             pos = Position - Quaternion.AngleAxis(90, Vector3.up) * Player.Hub.PlayerCameraReference.forward / 10 * speed;
 
                             if (!Physics.Linecast(Position, pos, Player.MovementSync.CollidableSurfaces))
-                            {
                                 Player.MovementSync.OverridePosition(pos, 0f, true);
-                                IsWallOnLeft = false;
-                            }
-                            else IsWallOnLeft = true;
+                            else wall = true;
                             break;
                     }
 
-                    if (IsWallOnLeft || IsWallOnRight || IsWallBehind || IsWallOnFront) MoveDirection = MovementDirection.None;
+                    if (wall)
+                    {
+                        MoveDirection = MovementDirection.None;
+                    }
                 }
                 catch (Exception e)
                 {
